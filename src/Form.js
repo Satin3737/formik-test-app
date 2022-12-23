@@ -1,5 +1,18 @@
-import {Form, Field, Formik, ErrorMessage} from "formik";
+import {Form, Field, Formik, ErrorMessage, useField} from "formik";
 import * as Yup from 'yup';
+
+const TextInput = ({label, ...props}) => {
+    const [field, meta] = useField(props);
+    return (
+        <>
+            <label htmlFor={props.name}>{label}</label>
+            <input {...props} {...field} />
+            {meta.touched && meta.error ? (
+                <div className="error">{meta.error}</div>
+            ) : null}
+        </>
+    )
+}
 
 const CustomForm = () => {
     return (
@@ -35,29 +48,26 @@ const CustomForm = () => {
             <Form className="form">
                 <h2>Donation</h2>
 
-                <label htmlFor="name">Your name</label>
-                <Field
+                <TextInput
+                    label="Your name"
                     id="name"
                     name="name"
                     type="text"
                 />
-                <ErrorMessage className="error" name="name" component="div" />
 
-                <label htmlFor="email">Your email</label>
-                <Field
+                <TextInput
+                    label="Your email"
                     id="email"
                     name="email"
-                    type="email"
+                    type="text"
                 />
-                <ErrorMessage className="error" name="email" component="div" />
 
-                <label htmlFor="amount">Amount</label>
-                <Field
+                <TextInput
+                    label="Amount"
                     id="amount"
                     name="amount"
                     type="number"
                 />
-                <ErrorMessage className="error" name="amount" component="div" />
 
                 <label htmlFor="currency">Currency</label>
                 <Field
